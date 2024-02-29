@@ -14,7 +14,7 @@ RUN echo '[mysqld]\nskip-host-cache\nskip-name-resolve' > /etc/mysql/conf.d/dock
 RUN echo "bind-address=0.0.0.0" >> /etc/mysql/mariadb.conf.d/99_mariadb.cnf
 
 # Copy shell script to image and set it to entrypoint
-COPY images/conf/entrypoint.sh /
+COPY conf/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
