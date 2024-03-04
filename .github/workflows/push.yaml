@@ -44,6 +44,7 @@ jobs:
         run: |
           echo ${{ steps.meta.outputs.tags }}
           echo ${{ steps.meta.outputs.labels }}
+          echo ${{ github.ref }}
           echo "## Building and pushing image with commit number"
           image_tag=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:1.1.${{github.run_number}}
           docker build . -t "$image_tag"
