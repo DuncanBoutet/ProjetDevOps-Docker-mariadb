@@ -39,15 +39,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       
-
-      - name: Use commit number in image tag (optional)
-        run: |
-          echo "## Building and pushing image with commit number"
-          image_tag=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:1.1.${{github.run_number}}
-          docker build . -t "$image_tag"
-          docker push "$image_tag"
-
-      - name: Build and push Docker image (default)
+      - name: Build and push Docker image (optional)
         if: ${{ github.ref }} == 'refs/heads/production'
         run: |
           echo ${{ github.ref }}
@@ -57,3 +49,12 @@ jobs:
           image_tag=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           docker build . -t "$image_tag"
           docker push "$image_tag"
+
+      - name: Use commit number in image tag (default)
+        run: |
+          echo "## Building and pushing image with commit number"
+          image_tag=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:1.1.${{github.run_number}}
+          docker build . -t "$image_tag"
+          docker push "$image_tag"
+
+      
