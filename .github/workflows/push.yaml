@@ -40,7 +40,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build and push Docker image (optional)
-        if: ${{ github.ref }} == 'refs/heads/production'
+        if: github.ref == 'refs/heads/production'
         run: |
           echo ${{ github.ref }}
           echo 'refs/heads/production'
