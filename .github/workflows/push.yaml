@@ -38,30 +38,17 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Get commit SHA
-        run: echo "## ${{ github.sha }}"
-
-      - name: Extract commit number (optional)
-        id: extract_commit_number
-        run: |
-          commit_number=${{ github.sha }}
-          if [[ "$commit_number" =~ ^[0-9a-f]{7} ]]; then
-            echo "## Extracted commit number: $commit_number"
-            echo "::set-output name=commit_number::$commit_number"
-          else
-            echo "## Could not extract commit number from SHA"
-          fi
+      
 
       - name: Use commit number in image tag (optional)
-        if: steps.extract_commit_number.outputs.commit_number
         run: |
           echo "## Building and pushing image with commit number"
-          image_tag=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.extract_commit_number.outputs.commit_number }}
+          image_tag=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:1.1.${{github.run_number}}
           docker build . -t "$image_tag"
           docker push "$image_tag"
 
       - name: Build and push Docker image (default)
+        if: ${{ github.ref }} == 'refs/heads/production'
         run: |
           echo "## Building and pushing image without commit number"
           image_tag=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
