@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 RUN echo '[mysqld]\nskip-host-cache\nskip-name-resolve' > /etc/mysql/conf.d/docker.cnf
 
 # Bind MariaDB to all interfaces
-RUN echo "bind-address=0.0.0.0" >> /etc/mysql/mariadb.conf.d/99_mariadb.cnf
+RUN echo "[mysqld]\nbind-address=0.0.0.0" >> /etc/mysql/mariadb.conf.d/99_mariadb.cnf
 
 # Copy shell script to image and set it to entrypoint
 COPY conf/entrypoint.sh /
