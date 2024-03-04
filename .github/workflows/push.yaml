@@ -42,9 +42,6 @@ jobs:
 
       - name: Use commit number in image tag (optional)
         run: |
-          echo ${{ steps.meta.outputs.tags }}
-          echo ${{ steps.meta.outputs.labels }}
-          echo ${{ github.ref }}
           echo "## Building and pushing image with commit number"
           image_tag=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:1.1.${{github.run_number}}
           docker build . -t "$image_tag"
@@ -53,6 +50,9 @@ jobs:
       - name: Build and push Docker image (default)
         if: ${{ github.ref }} == 'refs/heads/production'
         run: |
+          echo ${{ github.ref }}
+          echo 'refs/heads/production'
+          echo ${{ github.ref }} == 'refs/heads/production'
           echo "## Building and pushing image without commit number"
           image_tag=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           docker build . -t "$image_tag"
