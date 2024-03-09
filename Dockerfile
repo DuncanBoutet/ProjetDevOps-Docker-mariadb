@@ -4,7 +4,8 @@ FROM ubuntu:latest
 # Updating and installing necessary software
 RUN apt-get update && apt-get install -y \
 	mariadb-server \
-	mariadb-client
+	mariadb-client \
+    dos2unix
 
 
 # Allow to use all databases
@@ -15,7 +16,8 @@ RUN echo "[mysqld]\nbind-address=0.0.0.0" >> /etc/mysql/mariadb.conf.d/99_mariad
 
 # Copy shell script to image and set it to entrypoint
 COPY conf/entrypoint.sh /
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh \
+    dos2unix /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Expose port 3306
