@@ -1,8 +1,9 @@
 #!/bin/bash
-
+echo 'Début entrypoint.sh'
 # Start MariaDB
 service mariadb start
 
+echo 'Check if databases are present, if not create them'
 # Check if databases are present, if not create them
 if [ ! "$(ls -A /var/lib/mysql)" ]; then
 	echo "MariaDB data not found, installing..."
@@ -22,5 +23,8 @@ EOF
 	mysql < /tmp/sql
 fi
 
+echo 'Start MariaDB background process'
 # Start MariaDB background process
 /usr/bin/mysqld_safe
+
+echo 'Fin entrypoint.sh'
