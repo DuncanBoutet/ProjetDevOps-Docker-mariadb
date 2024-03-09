@@ -16,7 +16,7 @@ RUN echo "[mysqld]\nbind-address=0.0.0.0" >> /etc/mysql/mariadb.conf.d/99_mariad
 
 # Copy shell script to image and set it to entrypoint
 COPY conf/entrypoint.sh /
-RUN chmod +x /entrypoint.sh \
+RUN chmod +x /entrypoint.sh && \
     dos2unix /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
