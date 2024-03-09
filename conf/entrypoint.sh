@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start MariaDB
-service mysql start
+service mariadb start
 
 # Check if databases are present, if not create them
 if [ ! "$(ls -A /var/lib/mysql)" ]; then
